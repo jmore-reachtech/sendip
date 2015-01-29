@@ -183,6 +183,10 @@ static int sendpacket(sendip_data *data, char *hostname, int af_type,
 	}
 #endif /* __sun__ */
 
+        /* Allow Broadcast */
+        int on = 1;
+        setsockopt(s, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on));
+
 	/* Send the packet */
 	sent = sendto(s, (char *)data->data, data->alloc_len, 0, (void *)to, tolen);
 	if (sent == data->alloc_len) {
